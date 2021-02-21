@@ -19,15 +19,23 @@ const [LOGIN, LOGIN_SUCCESS, LOGIN_FAILURE] = createRequestActionTypes(
 
 export const changeField = createAction(CHANGE_FIELD);
 export const initializeForm = createAction(INITIALIZE_FORM);
-export const register = createAction(REGISTER);
+export const register = createAction(REGISTER, ({ username, password }) => ({
+  username,
+  password,
+}));
 export const login = createAction(LOGIN);
+
+/* Saga   */
 
 const registerSaga = createRequestSaga(REGISTER, authAPI.register);
 const loginSaga = createRequestSaga(LOGIN, authAPI.login);
+
 export function* authSaga() {
   yield takeLatest(REGISTER, registerSaga);
   yield takeLatest(LOGIN, loginSaga);
 }
+
+/*        */
 
 const initialState = {
   register: {
@@ -52,6 +60,7 @@ const auth = handleActions(
     [INITIALIZE_FORM]: (state, { payload: form }) => ({
       ...state,
       [form]: initialState[form],
+      authError: null,
     }),
     [REGISTER_SUCCESS]: (state, { payload: auth }) => ({
       ...state,

@@ -53,7 +53,7 @@ const ErrorMessage = styled.div`
   margin-top: 1rem;
 `;
 
-const AuthForm = ({ type, form, onChange, onSubmit }) => {
+const AuthForm = ({ type, form, onChange, onSubmit, error }) => {
   const text = textMap[type];
   return (
     <AuthFormBlock>
@@ -84,6 +84,7 @@ const AuthForm = ({ type, form, onChange, onSubmit }) => {
             value={form.passwordConfirm}
           />
         )}
+        {error && <ErrorMessage>{error}</ErrorMessage>}
         <ButtonWithMarginTop cyan fullWidth>
           {text}
         </ButtonWithMarginTop>
